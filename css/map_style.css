@@ -1,7 +1,9 @@
+/* style for map body */
 body { margin: 0; padding: 0; }
 #map_ft { position: absolute; top: 0; bottom: 0; width: 100%; z-index: 1; }
 #map_sm { position: absolute; top: 0; bottom: 0; width: 100%; z-index: 1; }
 
+/* style for maptitle */
 .maptitle{
     position: fixed;
     top:5px;
@@ -13,19 +15,22 @@ body { margin: 0; padding: 0; }
     background-color: #F0FFF0;
     border-radius:5px;
 }
-
+/* style for description */
 .mapdesc{
     position: fixed;
     bottom:5px;
     /* right: 0; */
     left: 1%;
     z-index: 10;
-    margin: 5px;
-    padding: 2px;
+    margin: 2px;
+    padding: 10px;
     background-color: #F0FFF0;
     border-radius:5px;
+    width: 300px;
+    font-family: Georgia, serif;
+    font-style: italic;
 }
-
+/* style for map switcher */
 .map_switcher{
   position: fixed;
   top:5px;
