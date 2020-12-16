@@ -6,8 +6,8 @@ function loadMap_ft(){
   var mapft = new mapboxgl.Map({
   container: 'map_ft', // container id
   style: 'mapbox://styles/mapbox/light-v10', // style URL
-  center: [-122.225131,47.037320], // starting position [lng, lat]
-  zoom: 9 // starting zoom
+  center: [-122.15103,47.14020], // starting position [lng, lat]
+  zoom: 12 // starting zoom
   });
 
 
@@ -35,21 +35,40 @@ function loadMap_ft(){
 
  //foothill Trails
  mapft.on('load', function(){
-	mapft.addSource('foothill_trails', {
-		"type": "geojson",
-		"data": "data/foothills_trails.geojson"
-	});
-	mapft.addLayer({
-		"id":"Foothill_trails",
-		"type":"circle",
-		"source":"foothill_trails",
-		"paint": {
-				"circle-color": "blue",
-				"circle-opacity": 1
-		}
-	});
+   mapft.loadImage(
+     'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+     function (error, image){
+       if(error) throw error;
+       mapft.addImage('custom-marker',image);
+
+       mapft.addSource('foothill_trails', {
+     		"type": "geojson",
+     		"data": "data/foothills_trails.geojson"
+     	});
+       mapft.addLayer({
+        	"id":"Foothill_trails",
+        	"type":"symbol",
+        	"source":"foothill_trails",
+          'layout': {
+              'icon-image': 'custom-marker',
+              // get the title name from the source's "title" property
+               'text-field': ['get', 'SURFACE'],
+              'text-font': [
+              'Open Sans Semibold',
+              'Arial Unicode MS Bold'
+              ],
+              'text-offset': [0, 1.25],
+              'text-anchor': 'top',
+              'icon-size':0.5
+          }
+
+        });
+     }
+   );
+
 });
 
+//display content of foothill marker
 mapft.on('click', 'Foothill_trails', function (e) {
 	new mapboxgl.Popup()
 	.setLngLat(e.lngLat)
@@ -57,12 +76,12 @@ mapft.on('click', 'Foothill_trails', function (e) {
 	.addTo(mapft);
 });
 
-// cursor handling
+// cursor  change to pointer hand
 mapft.on('mouseenter', 'Foothill_trails', function () {
 		mapft.getCanvas().style.cursor = 'pointer';
 });
 
-// cursor handling
+// cursor change to pan hand
 mapft.on('mouseleave', 'Foothill_trails', function () {
 	mapft.getCanvas().style.cursor = '';
 });
@@ -72,6 +91,7 @@ mapft.on('mouseleave', 'Foothill_trails', function () {
 }
 
 //----------------------map of sensitive area markers -------------------------
+//function load map of sensitive area points
 function loadMap_sm(){
   mapboxgl.accessToken = 'pk.eyJ1Ijoic2VsYWFkaSIsImEiOiJja2hjcDNrYjMwYXJvMnhtejk5cmlnaDhlIn0.AKvx3wVR6n155pX8BfVSWg';
   var mapsm = new mapboxgl.Map({
@@ -84,19 +104,42 @@ function loadMap_sm(){
 
   //foothill Trails
   mapsm.on('load', function(){
-   	mapsm.addSource('sensitive_area', {
-   		"type": "geojson",
-   		"data": "data/sensitive_area_markers.geojson"
-   	});
- 	mapsm.addLayer({
- 		"id":"Sensitive_area",
- 		"type":"circle",
- 		"source":"sensitive_area",
- 		"paint": {
- 				"circle-color": "red",
- 				"circle-opacity": 1
- 		}
- 	});
+    mapsm.loadImage(
+      'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+      function (error, image){
+        if(error) throw error;
+        mapsm.addImage('custom-markers',image);
+
+        mapsm.addSource('sensitive_area', {
+       		"type": "geojson",
+       		"data": "data/sensitive_area_markers.geojson"
+       	});
+        mapsm.addLayer({
+          "id":"Sensitive_area",
+       		"type":"symbol",
+       		"source":"sensitive_area",
+           'layout': {
+               'icon-image': 'custom-markers',
+               // get the title name from the source's "title" property
+                'text-field': ['get', 'SOURCETHM'],
+               'text-font': [
+               'Open Sans Semibold',
+               'Arial Unicode MS Bold'
+               ],
+               'text-offset': [0, 0.5],
+               'text-anchor': 'top',
+               'icon-size':0.3,
+               'text-size':12
+           },
+           "paint":{
+             "text-color":"#ffffff"
+           }
+
+         });
+      }
+    );
+
+
  });
 
 
@@ -124,6 +167,7 @@ function loadMap_sm(){
 //loading sensitive markers
 loadMap_sm();
 
+// create the switching/toggle event between two maps on one page
 $( document ).ready(function() {
   var s= 0;
   $("#switch_map_icon").on("click" ,function() {
