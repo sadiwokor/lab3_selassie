@@ -42,14 +42,16 @@ function loadMap_ft(){
  });
 
 
- //foothill Trails
+ //foothill Trails added to map
  mapft.on('load', function(){
    mapft.loadImage(
+     //custom image url
      'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
      function (error, image){
        if(error) throw error;
+       //adding custom image
        mapft.addImage('custom-marker',image);
-
+       //adding geojson
        mapft.addSource('foothill_trails', {
      		"type": "geojson",
      		"data": "data/foothills_trails.geojson"
@@ -100,12 +102,13 @@ mapft.on('mouseleave', 'Foothill_trails', function () {
 }
 
 //----------------------map of sensitive area markers -------------------------
+
 //function load map of sensitive area points
 function loadMap_sm(){
   mapboxgl.accessToken = 'pk.eyJ1Ijoic2VsYWFkaSIsImEiOiJja2hjcDNrYjMwYXJvMnhtejk5cmlnaDhlIn0.AKvx3wVR6n155pX8BfVSWg';
   var mapsm = new mapboxgl.Map({
   container: 'map_sm', // container id
-  style: 'mapbox://styles/selaadi/ckhx2fv0003tq19ph9tzdy88g', // style URL
+  style: 'mapbox://styles/selaadi/ckis419ja0l6j19nnftlyozo1', // style URL
   center: [-122.225131,47.037320], // starting position [lng, lat]
   zoom: 9 // starting zoom
   });
@@ -122,15 +125,18 @@ function loadMap_sm(){
   //foothill Trails
   mapsm.on('load', function(){
     mapsm.loadImage(
+      //url to customer marker
       'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
       function (error, image){
         if(error) throw error;
+        //adding a custom marker
         mapsm.addImage('custom-markers',image);
 
         mapsm.addSource('sensitive_area', {
        		"type": "geojson",
        		"data": "data/sensitive_area_markers.geojson"
        	});
+
         mapsm.addLayer({
           "id":"Sensitive_area",
        		"type":"symbol",
@@ -149,7 +155,7 @@ function loadMap_sm(){
                'text-size':12
            },
            "paint":{
-             "text-color":"#ffffff"
+             "text-color":"#000000"
            }
 
          });
@@ -157,6 +163,7 @@ function loadMap_sm(){
     );
  });
 
+//Display popup information
  mapsm.on('click', 'Sensitive_area', function (e) {
  	new mapboxgl.Popup()
  	.setLngLat(e.lngLat)
@@ -181,7 +188,7 @@ function loadMap_sm(){
 //loading sensitive markers
 loadMap_sm();
 
-// create the switching/toggle event between two maps on one page
+// switching/toggle event between two maps on one page
 $( document ).ready(function() {
   var s= 0;
   $("#switch_map_icon").on("click" ,function() {
