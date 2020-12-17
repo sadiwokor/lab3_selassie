@@ -10,6 +10,15 @@ function loadMap_ft(){
   zoom: 12 // starting zoom
   });
 
+//geocoding function
+  mapft.addControl(
+    new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+    })
+  );
+
+
 
   //loading boundary
  mapft.on('load', function () {
@@ -101,6 +110,14 @@ function loadMap_sm(){
   zoom: 9 // starting zoom
   });
 
+  mapsm.addControl(
+    new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+    })
+  );
+
+
 
   //foothill Trails
   mapsm.on('load', function(){
@@ -138,10 +155,7 @@ function loadMap_sm(){
          });
       }
     );
-
-
  });
-
 
  mapsm.on('click', 'Sensitive_area', function (e) {
  	new mapboxgl.Popup()
