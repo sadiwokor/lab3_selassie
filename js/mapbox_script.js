@@ -18,6 +18,15 @@ function loadMap_ft(){
     })
   );
 
+  // Add geolocate control to the map.
+  mapft.addControl(
+  new mapboxgl.GeolocateControl({
+      positionOptions: {
+      enableHighAccuracy: true
+      },
+      trackUserLocation: true
+      })
+  );
 
 
   //loading boundary
@@ -113,16 +122,27 @@ function loadMap_sm(){
   zoom: 9 // starting zoom
   });
 
+//geocoding control to the map
   mapsm.addControl(
     new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl
-    })
+    }),
+
+  );
+
+  // Add geolocate control to the map.
+  mapsm.addControl(
+  new mapboxgl.GeolocateControl({
+      positionOptions: {
+      enableHighAccuracy: true
+      },
+      trackUserLocation: true
+      })
   );
 
 
-
-  //foothill Trails
+  //load geojson of sensitive area points
   mapsm.on('load', function(){
     mapsm.loadImage(
       //url to customer marker
