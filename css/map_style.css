@@ -33,9 +33,9 @@ body { margin: 0; padding: 0; }
 /* style for map switcher */
 .map_switcher{
   position: fixed;
-  top:5px;
+  top:50px;
   /* right: 0; */
-  right: 5%;
+  right: 2%;
   z-index: 12;
   margin: 5px;
   padding: 2px;
